@@ -7,20 +7,12 @@ export let requestCount = new Counter("request_count");
 
 export let options = {
   scenarios: {
-    scenario_1: {
+    edit_scenario_1: {
       executor: "constant-vus",
       vus: 10,
       duration: "30s",
     },
-    scenario_2: {
-      executor: "ramping-vus",
-      startVUs: 0,
-      stages: [
-        { duration: "30s", target: 10 },
-        { duration: "1m", target: 5 },
-      ],
-    },
-    scenario_3: {
+    edit_scenario_2: {
       executor: "ramping-vus",
       startVUs: 0,
       stages: [
@@ -31,7 +23,7 @@ export let options = {
   },
   thresholds: {
     errors: ["rate<0.1"], // <10% errors
-    "http_req_duration{scenario:scenario_1}": ["p(95)<500"], // 95% of requests must complete below 500ms
+    "http_req_duration{scenario:edit_scenario_1}": ["p(95)<500"], // 95% of requests must complete below 500ms
   },
 };
 
@@ -70,9 +62,9 @@ export default function () {
 
   // POST API endpoint: /posts
   let payload = JSON.stringify({
-    title: "perftest",
-    body: "post from k6",
-    userId: "wtw123",
+    title: "perftestupdate",
+    body: "updating post from k6",
+    userId: "wtw124",
   });
 
   let params = {
@@ -81,16 +73,17 @@ export default function () {
     },
   };
 
-  let resPost = http.post(
+  let resPost = http.put(
     "https://jsonplaceholder.typicode.com/posts",
     payload,
     params
   );
 
   let checkPost = check(resPost, {
-    "post contains title": (r) => JSON.parse(r.body).title === "perftest",
-    "post contains body": (r) => JSON.parse(r.body).body === "post from k6",
-    "post contains userId": (r) => JSON.parse(r.body).userId === "wtw123",
+    "post contains title": (r) => JSON.parse(r.body).title === "perftestupdate",
+    "post contains body": (r) =>
+      JSON.parse(r.body).body === "updating post from k6",
+    "post contains userId": (r) => JSON.parse(r.body).userId === "wtw124",
   });
   errorRate.add(!checkPost);
 

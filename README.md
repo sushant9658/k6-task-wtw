@@ -1,0 +1,1 @@
+to run the test execute "npm run test"
