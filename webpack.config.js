@@ -2,7 +2,7 @@ import path from "path";
 
 export default {
   mode: "production",
-  entry: "./src/test-edit-post.js",
+  entry: "./src/test-script.js",
   output: {
     path: path.resolve(process.cwd(), "dist"), // eslint-disable-line
     libraryTarget: "commonjs",
