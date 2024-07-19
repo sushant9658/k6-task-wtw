@@ -1,0 +1,18 @@
+{
+  "name": "wtw-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/test.js",
+  "type": "module",
+  "scripts": {
+    "test": "k6 run src/test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "k6": "0.0.0",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
